@@ -4,89 +4,43 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 20 10% 6%;
+    --foreground: 40 20% 92%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 20 8% 9%;
+    --card-foreground: 40 20% 92%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 20 8% 9%;
+    --popover-foreground: 40 20% 92%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 38 95% 55%;
+    --primary-foreground: 20 10% 6%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 20 8% 14%;
+    --secondary-foreground: 40 20% 92%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 20 8% 12%;
+    --muted-foreground: 40 10% 55%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 32 90% 48%;
+    --accent-foreground: 20 10% 6%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 40 20% 92%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 30 12% 16%;
+    --input: 30 12% 16%;
+    --ring: 38 95% 55%;
 
-    --radius: 0.5rem;
+    --radius: 0.375rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --gold: #f5a623;
+    --gold-light: #ffd166;
+    --gold-dark: #c97b1a;
+    --amber: #e8890c;
+    --surface: #111009;
+    --surface-2: #16140f;
+    --surface-3: #1e1b12;
   }
 }
 
@@ -97,5 +51,243 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: "IBM Plex Sans", sans-serif;
+    background-color: #0d0b07;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Oswald", sans-serif;
+    letter-spacing: 0.02em;
+  }
+}
+
+@layer utilities {
+  .font-oswald {
+    font-family: "Oswald", sans-serif;
+  }
+  .font-ibm {
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+  .font-mono-ibm {
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  .gold-gradient {
+    background: linear-gradient(135deg, #f5a623 0%, #ffd166 50%, #c97b1a 100%);
+  }
+
+  .gold-text {
+    background: linear-gradient(135deg, #ffd166 0%, #f5a623 60%, #e8890c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .amber-glow {
+    box-shadow:
+      0 0 30px rgba(245, 166, 35, 0.15),
+      0 0 60px rgba(245, 166, 35, 0.05);
+  }
+
+  .amber-glow-strong {
+    box-shadow:
+      0 0 20px rgba(245, 166, 35, 0.3),
+      0 0 40px rgba(245, 166, 35, 0.1);
+  }
+
+  .card-surface {
+    background: linear-gradient(145deg, #161309 0%, #120f08 100%);
+    border: 1px solid rgba(245, 166, 35, 0.1);
+  }
+
+  .card-surface:hover {
+    border-color: rgba(245, 166, 35, 0.3);
+    box-shadow: 0 8px 32px rgba(245, 166, 35, 0.08);
+  }
+
+  .noise-overlay {
+    position: relative;
+  }
+
+  .noise-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-grid {
+    background-image:
+      linear-gradient(rgba(245, 166, 35, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 166, 35, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .section-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #f5a623, #ffd166);
+  }
+
+  .tag-badge {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    background: rgba(245, 166, 35, 0.08);
+    border: 1px solid rgba(245, 166, 35, 0.2);
+    color: #f5a623;
+    border-radius: 2px;
+  }
+
+  .nav-link {
+    position: relative;
+    color: rgba(240, 230, 210, 0.7);
+    transition: color 0.2s ease;
+    font-family: "Oswald", sans-serif;
+    letter-spacing: 0.08em;
+    font-weight: 400;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #f5a623;
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover {
+    color: #f5a623;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  .nav-link.active {
+    color: #f5a623;
+  }
+  .nav-link.active::after {
+    width: 100%;
+  }
+
+  .btn-gold {
+    background: linear-gradient(135deg, #f5a623 0%, #e8890c 100%);
+    color: #0d0b07;
+    font-family: "Oswald", sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .btn-gold:hover {
+    background: linear-gradient(135deg, #ffd166 0%, #f5a623 100%);
+    box-shadow: 0 4px 20px rgba(245, 166, 35, 0.35);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline-gold {
+    background: transparent;
+    color: #f5a623;
+    font-family: "Oswald", sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(245, 166, 35, 0.4);
+    transition: all 0.2s ease;
+  }
+
+  .btn-outline-gold:hover {
+    background: rgba(245, 166, 35, 0.08);
+    border-color: #f5a623;
+    box-shadow: 0 0 20px rgba(245, 166, 35, 0.15);
+  }
+
+  .divider-gold {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(245, 166, 35, 0.3),
+      transparent
+    );
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .delay-100 {
+    animation-delay: 0.1s;
+    opacity: 0;
+  }
+  .delay-200 {
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+  .delay-300 {
+    animation-delay: 0.3s;
+    opacity: 0;
+  }
+  .delay-400 {
+    animation-delay: 0.4s;
+    opacity: 0;
+  }
+  .delay-500 {
+    animation-delay: 0.5s;
+    opacity: 0;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #111009;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(245, 166, 35, 0.3);
+    border-radius: 2px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(245, 166, 35, 0.6);
   }
 }
