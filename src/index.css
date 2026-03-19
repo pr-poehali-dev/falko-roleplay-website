@@ -2,164 +2,267 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 20 10% 6%;
-    --foreground: 40 20% 92%;
+/* ══════════════════════════════════════
+   SEASON THEMES
+══════════════════════════════════════ */
 
-    --card: 20 8% 9%;
-    --card-foreground: 40 20% 92%;
+/* SPRING */
+:root,
+:root[data-season="spring"] {
+  --background: 20 10% 6%;
+  --foreground: 40 20% 92%;
+  --card: 20 8% 9%;
+  --card-foreground: 40 20% 92%;
+  --popover: 20 8% 9%;
+  --popover-foreground: 40 20% 92%;
+  --primary: 150 45% 55%;
+  --primary-foreground: 20 10% 6%;
+  --secondary: 20 8% 14%;
+  --secondary-foreground: 40 20% 92%;
+  --muted: 20 8% 12%;
+  --muted-foreground: 40 10% 55%;
+  --accent: 340 60% 65%;
+  --accent-foreground: 20 10% 6%;
+  --destructive: 0 62.8% 50%;
+  --destructive-foreground: 40 20% 92%;
+  --border: 150 12% 18%;
+  --input: 150 12% 18%;
+  --ring: 150 45% 55%;
+  --radius: 0.375rem;
+  --season-primary: #6dbf8a;
+  --season-secondary: #e8a0bf;
+  --season-glow: rgba(109, 191, 138, 0.18);
+  --season-glow-soft: rgba(109, 191, 138, 0.07);
+  --season-border: rgba(109, 191, 138, 0.15);
+  --season-text: #6dbf8a;
+  --season-text-soft: rgba(109, 191, 138, 0.7);
+  --gold: #f5a623;
+  --gold-light: #ffd166;
+  --gold-dark: #c97b1a;
+}
 
-    --popover: 20 8% 9%;
-    --popover-foreground: 40 20% 92%;
+/* SUMMER */
+:root[data-season="summer"] {
+  --season-primary: #f5a623;
+  --season-secondary: #ff7a00;
+  --season-glow: rgba(245, 166, 35, 0.18);
+  --season-glow-soft: rgba(245, 166, 35, 0.07);
+  --season-border: rgba(245, 166, 35, 0.15);
+  --season-text: #f5a623;
+  --season-text-soft: rgba(245, 166, 35, 0.7);
+  --border: 35 15% 18%;
+  --ring: 38 95% 55%;
+}
 
-    --primary: 38 95% 55%;
-    --primary-foreground: 20 10% 6%;
+/* AUTUMN */
+:root[data-season="autumn"] {
+  --season-primary: #d4622a;
+  --season-secondary: #e8890c;
+  --season-glow: rgba(212, 98, 42, 0.18);
+  --season-glow-soft: rgba(212, 98, 42, 0.07);
+  --season-border: rgba(212, 98, 42, 0.15);
+  --season-text: #d4622a;
+  --season-text-soft: rgba(212, 98, 42, 0.7);
+  --border: 25 15% 18%;
+  --ring: 22 70% 47%;
+}
 
-    --secondary: 20 8% 14%;
-    --secondary-foreground: 40 20% 92%;
-
-    --muted: 20 8% 12%;
-    --muted-foreground: 40 10% 55%;
-
-    --accent: 32 90% 48%;
-    --accent-foreground: 20 10% 6%;
-
-    --destructive: 0 62.8% 50%;
-    --destructive-foreground: 40 20% 92%;
-
-    --border: 30 12% 16%;
-    --input: 30 12% 16%;
-    --ring: 38 95% 55%;
-
-    --radius: 0.375rem;
-
-    --gold: #f5a623;
-    --gold-light: #ffd166;
-    --gold-dark: #c97b1a;
-    --amber: #e8890c;
-    --surface: #111009;
-    --surface-2: #16140f;
-    --surface-3: #1e1b12;
-  }
+/* WINTER */
+:root[data-season="winter"] {
+  --season-primary: #7eb8d4;
+  --season-secondary: #a8cfde;
+  --season-glow: rgba(126, 184, 212, 0.18);
+  --season-glow-soft: rgba(126, 184, 212, 0.07);
+  --season-border: rgba(126, 184, 212, 0.15);
+  --season-text: #7eb8d4;
+  --season-text-soft: rgba(126, 184, 212, 0.7);
+  --border: 200 15% 18%;
+  --ring: 200 50% 60%;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: "EB Garamond", "Georgia", serif;
     background-color: #0d0b07;
+    -webkit-font-smoothing: antialiased;
   }
-
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-family: "Oswald", sans-serif;
-    letter-spacing: 0.02em;
+    font-family: "Cinzel", serif;
+    letter-spacing: 0.03em;
   }
 }
 
 @layer utilities {
-  .font-oswald {
-    font-family: "Oswald", sans-serif;
+  .font-cinzel {
+    font-family: "Cinzel", serif;
   }
-  .font-ibm {
-    font-family: "IBM Plex Sans", sans-serif;
+  .font-cinzel-deco {
+    font-family: "Cinzel Decorative", serif;
+  }
+  .font-garamond {
+    font-family: "EB Garamond", "Georgia", serif;
   }
   .font-mono-ibm {
     font-family: "IBM Plex Mono", monospace;
+  }
+  .font-oswald {
+    font-family: "Oswald", sans-serif;
   }
 
   .gold-gradient {
     background: linear-gradient(135deg, #f5a623 0%, #ffd166 50%, #c97b1a 100%);
   }
-
   .gold-text {
     background: linear-gradient(135deg, #ffd166 0%, #f5a623 60%, #e8890c 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+  .season-text {
+    color: var(--season-primary);
+  }
+  .season-text-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--season-primary),
+      var(--season-secondary)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Falling petals */
+  @keyframes fall {
+    0% {
+      transform: translateY(-30px) translateX(0) rotate(0deg);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translateY(110vh) translateX(80px) rotate(400deg);
+      opacity: 0;
+    }
+  }
+  @keyframes sway {
+    0%,
+    100% {
+      margin-left: 0;
+    }
+    50% {
+      margin-left: 25px;
+    }
+  }
+  .petal {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    animation:
+      fall linear infinite,
+      sway ease-in-out infinite alternate;
+  }
+  /* Snowflakes */
+  @keyframes snowfall {
+    0% {
+      transform: translateY(-30px) translateX(0) rotate(0deg);
+      opacity: 0.85;
+    }
+    100% {
+      transform: translateY(110vh) translateX(-40px) rotate(720deg);
+      opacity: 0;
+    }
+  }
+  .snowflake {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    animation: snowfall linear infinite;
+  }
+  /* Autumn leaves */
+  @keyframes leaffall {
+    0% {
+      transform: translateY(-30px) translateX(0) rotate(0deg);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translateY(110vh) translateX(-60px) rotate(200deg);
+      opacity: 0;
+    }
+  }
+  .leaf {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    animation: leaffall linear infinite;
+  }
 
   .amber-glow {
     box-shadow:
-      0 0 30px rgba(245, 166, 35, 0.15),
-      0 0 60px rgba(245, 166, 35, 0.05);
-  }
-
-  .amber-glow-strong {
-    box-shadow:
-      0 0 20px rgba(245, 166, 35, 0.3),
-      0 0 40px rgba(245, 166, 35, 0.1);
+      0 0 30px var(--season-glow),
+      0 0 60px var(--season-glow-soft);
   }
 
   .card-surface {
     background: linear-gradient(145deg, #161309 0%, #120f08 100%);
-    border: 1px solid rgba(245, 166, 35, 0.1);
+    border: 1px solid var(--season-border);
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
   }
-
   .card-surface:hover {
-    border-color: rgba(245, 166, 35, 0.3);
-    box-shadow: 0 8px 32px rgba(245, 166, 35, 0.08);
-  }
-
-  .noise-overlay {
-    position: relative;
-  }
-
-  .noise-overlay::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    opacity: 0.035;
-    pointer-events: none;
-    z-index: 1;
+    border-color: var(--season-primary);
+    box-shadow: 0 8px 32px var(--season-glow-soft);
   }
 
   .hero-grid {
     background-image:
-      linear-gradient(rgba(245, 166, 35, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(245, 166, 35, 0.03) 1px, transparent 1px);
+      linear-gradient(var(--season-glow-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--season-glow-soft) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 
   .section-line {
     width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, #f5a623, #ffd166);
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      var(--season-primary),
+      var(--season-secondary)
+    );
+    flex-shrink: 0;
   }
 
   .tag-badge {
     font-family: "IBM Plex Mono", monospace;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     padding: 2px 8px;
-    background: rgba(245, 166, 35, 0.08);
-    border: 1px solid rgba(245, 166, 35, 0.2);
-    color: #f5a623;
+    background: var(--season-glow-soft);
+    border: 1px solid var(--season-border);
+    color: var(--season-primary);
     border-radius: 2px;
+    display: inline-block;
   }
 
   .nav-link {
     position: relative;
-    color: rgba(240, 230, 210, 0.7);
+    color: rgba(240, 230, 210, 0.58);
     transition: color 0.2s ease;
-    font-family: "Oswald", sans-serif;
-    letter-spacing: 0.08em;
+    font-family: "Cinzel", serif;
+    letter-spacing: 0.05em;
     font-weight: 400;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
   }
-
   .nav-link::after {
     content: "";
     position: absolute;
@@ -167,18 +270,17 @@
     left: 0;
     width: 0;
     height: 1px;
-    background: #f5a623;
+    background: var(--season-primary);
     transition: width 0.3s ease;
   }
-
   .nav-link:hover {
-    color: #f5a623;
+    color: var(--season-primary);
   }
   .nav-link:hover::after {
     width: 100%;
   }
   .nav-link.active {
-    color: #f5a623;
+    color: var(--season-primary);
   }
   .nav-link.active::after {
     width: 100%;
@@ -187,14 +289,14 @@
   .btn-gold {
     background: linear-gradient(135deg, #f5a623 0%, #e8890c 100%);
     color: #0d0b07;
-    font-family: "Oswald", sans-serif;
+    font-family: "Cinzel", serif;
     font-weight: 600;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     transition: all 0.2s ease;
     border: none;
+    cursor: pointer;
   }
-
   .btn-gold:hover {
     background: linear-gradient(135deg, #ffd166 0%, #f5a623 100%);
     box-shadow: 0 4px 20px rgba(245, 166, 35, 0.35);
@@ -204,18 +306,34 @@
   .btn-outline-gold {
     background: transparent;
     color: #f5a623;
-    font-family: "Oswald", sans-serif;
+    font-family: "Cinzel", serif;
     font-weight: 500;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     border: 1px solid rgba(245, 166, 35, 0.4);
     transition: all 0.2s ease;
+    cursor: pointer;
   }
-
   .btn-outline-gold:hover {
     background: rgba(245, 166, 35, 0.08);
     border-color: #f5a623;
     box-shadow: 0 0 20px rgba(245, 166, 35, 0.15);
+  }
+
+  .btn-outline-season {
+    background: transparent;
+    color: var(--season-primary);
+    font-family: "Cinzel", serif;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    border: 1px solid var(--season-border);
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  .btn-outline-season:hover {
+    background: var(--season-glow-soft);
+    border-color: var(--season-primary);
   }
 
   .divider-gold {
@@ -227,11 +345,20 @@
       transparent
     );
   }
+  .divider-season {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--season-primary),
+      transparent
+    );
+    opacity: 0.25;
+  }
 
   .animate-fade-up {
     animation: fadeUp 0.6s ease forwards;
   }
-
   .animate-fade-in {
     animation: fadeIn 0.4s ease forwards;
   }
@@ -246,7 +373,6 @@
       transform: translateY(0);
     }
   }
-
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -272,10 +398,6 @@
     animation-delay: 0.4s;
     opacity: 0;
   }
-  .delay-500 {
-    animation-delay: 0.5s;
-    opacity: 0;
-  }
 
   .scrollbar-thin::-webkit-scrollbar {
     width: 4px;
@@ -284,10 +406,48 @@
     background: #111009;
   }
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: rgba(245, 166, 35, 0.3);
+    background: var(--season-border);
     border-radius: 2px;
   }
-  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background: rgba(245, 166, 35, 0.6);
+
+  /* Hero overlays per season */
+  .hero-overlay-spring {
+    background: linear-gradient(
+      180deg,
+      rgba(13, 18, 13, 0.25) 0%,
+      rgba(20, 40, 22, 0.45) 50%,
+      #0d0b07 100%
+    );
+  }
+  .hero-overlay-summer {
+    background: linear-gradient(
+      180deg,
+      rgba(13, 11, 7, 0.2) 0%,
+      rgba(50, 30, 5, 0.45) 50%,
+      #0d0b07 100%
+    );
+  }
+  .hero-overlay-autumn {
+    background: linear-gradient(
+      180deg,
+      rgba(18, 10, 5, 0.2) 0%,
+      rgba(55, 22, 8, 0.5) 50%,
+      #0d0b07 100%
+    );
+  }
+  .hero-overlay-winter {
+    background: linear-gradient(
+      180deg,
+      rgba(8, 14, 22, 0.3) 0%,
+      rgba(12, 24, 40, 0.5) 50%,
+      #0b0f18 100%
+    );
+  }
+
+  /* Codex document style */
+  .codex-page {
+    background: #1a1710;
+    border: 1px solid rgba(245, 200, 66, 0.15);
+    border-radius: 4px;
   }
 }

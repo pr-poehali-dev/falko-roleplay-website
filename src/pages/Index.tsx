@@ -1,10 +1,35 @@
 import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
-const HERO_IMAGE = "https://cdn.poehali.dev/projects/3c74d287-0c6a-48ec-89c2-ecef9852c1c7/files/de16f0a5-f23f-4a14-8bbc-24da6d5ef2a7.jpg";
+const HERO_IMAGE = "https://cdn.poehali.dev/projects/3c74d287-0c6a-48ec-89c2-ecef9852c1c7/bucket/69b9286e-eb94-4017-b2fe-72d183d8cc17.png";
 const CODEX_IMAGE = "https://cdn.poehali.dev/projects/3c74d287-0c6a-48ec-89c2-ecef9852c1c7/files/ea8082ea-6692-40a6-a24c-521a4644dbf0.jpg";
+const LOGO_URL = "https://cdn.poehali.dev/files/ad06239e-158e-4306-b5bd-5ddd8d870ad3.png";
 
 const ADMIN_PASSWORD = "falko2026";
+
+type Season = "spring" | "summer" | "autumn" | "winter";
+
+const SEASON_CONFIG: Record<Season, {
+  label: string; emoji: string; accent: string; secondary: string;
+  particleEmoji: string; particleCount: number; bodyBg: string;
+}> = {
+  spring: {
+    label: "Весна", emoji: "🌸", accent: "#6DBF8A", secondary: "#E8A0BF",
+    particleEmoji: "🌸", particleCount: 12, bodyBg: "#0A0D0A",
+  },
+  summer: {
+    label: "Лето", emoji: "☀️", accent: "#F5A623", secondary: "#FF7A00",
+    particleEmoji: "✨", particleCount: 8, bodyBg: "#0D0B07",
+  },
+  autumn: {
+    label: "Осень", emoji: "🍂", accent: "#D4622A", secondary: "#E8890C",
+    particleEmoji: "🍂", particleCount: 10, bodyBg: "#0D0905",
+  },
+  winter: {
+    label: "Зима", emoji: "❄️", accent: "#7EB8D4", secondary: "#A8CFDE",
+    particleEmoji: "❄️", particleCount: 15, bodyBg: "#080C12",
+  },
+};
 
 type Section = "home" | "codexes" | "documents" | "about" | "contacts" | "gallery" | "admin";
 
@@ -125,6 +150,27 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 const inputStyle = { background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", color: "white", width: "100%", borderRadius: "8px", padding: "0.6rem 1rem", fontSize: "0.875rem", outline: "none" } as React.CSSProperties;
 
+// ─── SEASON PARTICLES ───
+function SeasonParticles({ season }: { season: Season }) {
+  const cfg = SEASON_CONFIG[season];
+  const particles = Array.from({ length: cfg.particleCount }, (_, i) => ({
+    id: i,
+    left: `${(i * 7 + 3) % 100}%`,
+    delay: `${(i * 1.3) % 8}s`,
+    duration: `${6 + (i % 5) * 1.5}s`,
+    size: `${14 + (i % 4) * 4}px`,
+  }));
+  return (
+    <>
+      {particles.map(p => (
+        <span key={p.id} className="petal" style={{ left: p.left, animationDelay: p.delay, animationDuration: p.duration, fontSize: p.size, top: "-30px" }}>
+          {cfg.particleEmoji}
+        </span>
+      ))}
+    </>
+  );
+}
+
 export default function Index() {
   const [activeSection, setActiveSection] = useState<Section>("home");
   const [searchQuery, setSearchQuery] = useState("");
@@ -133,6 +179,13 @@ export default function Index() {
   const [activeVersion, setActiveVersion] = useState(0);
   const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [season, setSeason] = useLocalStorage<Season>("falko_season", "spring");
+
+  // Apply season to <html>
+  useEffect(() => {
+    document.documentElement.setAttribute("data-season", season);
+    document.body.style.backgroundColor = SEASON_CONFIG[season].bodyBg;
+  }, [season]);
 
   // Data
   const [codexes, setCodexes] = useLocalStorage<Codex[]>("falko_codexes", DEFAULT_CODEXES);
@@ -253,40 +306,55 @@ export default function Index() {
     }
   }
 
+  const seasonCfg = SEASON_CONFIG[season];
+
   // ════════════════════════════════════════════════════════
   return (
-    <div className="min-h-screen bg-[#0D0B07] text-foreground" style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="min-h-screen text-foreground" style={{ fontFamily: "'EB Garamond', Georgia, serif", background: seasonCfg.bodyBg }}>
+
+      {/* Seasonal particles */}
+      <SeasonParticles season={season} />
 
       {/* ═══ NAVBAR ═══ */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5" style={{ background: "rgba(13,11,7,0.92)", backdropFilter: "blur(20px)" }}>
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b" style={{ background: `rgba(${season === "winter" ? "8,14,22" : "13,11,7"},0.93)`, backdropFilter: "blur(20px)", borderColor: `${seasonCfg.accent}18` }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
-            <button onClick={() => goTo("home")} className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded flex items-center justify-center" style={{ background: "linear-gradient(135deg, #F5A623, #C97B1A)" }}>
-                <Icon name="Scale" size={16} className="text-[#0D0B07]" />
-              </div>
-              <div className="text-left">
-                <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.8rem", letterSpacing: "0.15em", color: "white", textTransform: "uppercase", fontWeight: 600, lineHeight: 1 }}>Falko</div>
-                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.15em", color: "#F5A623", textTransform: "uppercase" }}>ROLE PLAY</div>
+
+            {/* Logo */}
+            <button onClick={() => goTo("home")} className="flex items-center gap-3 group">
+              <img src={LOGO_URL} alt="FRP" className="w-10 h-10 object-contain opacity-90 group-hover:opacity-100 transition-opacity" style={{ filter: "drop-shadow(0 0 6px rgba(245,166,35,0.3))" }} />
+              <div className="text-left hidden sm:block">
+                <div style={{ fontFamily: "'Cinzel', serif", fontSize: "0.85rem", letterSpacing: "0.12em", color: "white", fontWeight: 700, lineHeight: 1 }}>Falko RP</div>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.58rem", letterSpacing: "0.12em", color: seasonCfg.accent, textTransform: "uppercase" }}>Законодательная база</div>
               </div>
             </button>
 
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-7">
               {navItems.map(item => (
-                <button key={item.key} onClick={() => goTo(item.key)} className="nav-link" style={{ color: activeSection === item.key ? "#F5A623" : undefined }}>
+                <button key={item.key} onClick={() => goTo(item.key)} className="nav-link" style={{ color: activeSection === item.key ? seasonCfg.accent : undefined }}>
                   {item.label}
                 </button>
               ))}
             </div>
 
-            <div className="hidden md:flex items-center gap-3">
-              <a href="https://discord.gg/falkorp" target="_blank" rel="noopener noreferrer" className="btn-outline-gold px-4 py-2 text-xs rounded flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-2">
+              {/* Season switcher */}
+              <div className="flex items-center gap-1 mr-2 p-1 rounded-lg" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                {(Object.keys(SEASON_CONFIG) as Season[]).map(s => (
+                  <button key={s} onClick={() => setSeason(s)} title={SEASON_CONFIG[s].label}
+                    className="w-7 h-7 rounded flex items-center justify-center text-sm transition-all"
+                    style={{ background: season === s ? `${seasonCfg.accent}22` : "transparent", fontSize: "0.9rem" }}>
+                    {SEASON_CONFIG[s].emoji}
+                  </button>
+                ))}
+              </div>
+              <a href="https://discord.com/invite/dFJmxuSzRB" target="_blank" rel="noopener noreferrer"
+                className="btn-outline-gold px-4 py-2 text-xs rounded flex items-center gap-2">
                 <Icon name="MessageSquare" size={13} /> Discord
               </a>
-              <a href="https://t.me/falkoroleplay" target="_blank" rel="noopener noreferrer" className="btn-gold px-4 py-2 text-xs rounded flex items-center gap-2">
-                <Icon name="Send" size={13} /> Telegram
-              </a>
-              <button onClick={() => goTo("admin")} title="Управление" className="w-8 h-8 flex items-center justify-center rounded transition-colors hover:bg-white/8" style={{ color: activeSection === "admin" ? "#F5A623" : "rgba(255,255,255,0.3)" }}>
+              <button onClick={() => goTo("admin")} title="Управление"
+                className="w-8 h-8 flex items-center justify-center rounded transition-colors hover:bg-white/8"
+                style={{ color: activeSection === "admin" ? seasonCfg.accent : "rgba(255,255,255,0.3)" }}>
                 <Icon name="Settings" size={15} />
               </button>
             </div>
@@ -298,18 +366,29 @@ export default function Index() {
         </div>
 
         {menuOpen && (
-          <div className="md:hidden border-t border-white/5 px-6 py-5 space-y-4" style={{ background: "rgba(13,11,7,0.98)" }}>
+          <div className="md:hidden border-t px-6 py-5 space-y-4" style={{ background: `rgba(${season === "winter" ? "8,12,20" : "13,11,7"},0.98)`, borderColor: `${seasonCfg.accent}15` }}>
             {navItems.map(item => (
-              <button key={item.key} onClick={() => goTo(item.key)} className="block w-full text-left nav-link py-1" style={{ color: activeSection === item.key ? "#F5A623" : undefined }}>
+              <button key={item.key} onClick={() => goTo(item.key)} className="block w-full text-left nav-link py-1" style={{ color: activeSection === item.key ? seasonCfg.accent : undefined }}>
                 {item.label}
               </button>
             ))}
-            <button onClick={() => goTo("admin")} className="block w-full text-left nav-link py-1" style={{ color: activeSection === "admin" ? "#F5A623" : undefined }}>
+            <button onClick={() => goTo("admin")} className="block w-full text-left nav-link py-1" style={{ color: activeSection === "admin" ? seasonCfg.accent : undefined }}>
               Управление
             </button>
             <div className="flex gap-3 pt-2">
-              <a href="https://discord.gg/falkorp" target="_blank" rel="noopener noreferrer" className="btn-outline-gold px-4 py-2 text-xs rounded flex items-center gap-2 flex-1 justify-center"><Icon name="MessageSquare" size={13} /> Discord</a>
-              <a href="https://t.me/falkoroleplay" target="_blank" rel="noopener noreferrer" className="btn-gold px-4 py-2 text-xs rounded flex items-center gap-2 flex-1 justify-center"><Icon name="Send" size={13} /> Telegram</a>
+              <a href="https://discord.com/invite/dFJmxuSzRB" target="_blank" rel="noopener noreferrer"
+                className="btn-outline-gold px-4 py-2 text-xs rounded flex items-center gap-2 flex-1 justify-center">
+                <Icon name="MessageSquare" size={13} /> Discord
+              </a>
+            </div>
+            <div className="flex gap-1 pt-1">
+              {(Object.keys(SEASON_CONFIG) as Season[]).map(s => (
+                <button key={s} onClick={() => setSeason(s)} title={SEASON_CONFIG[s].label}
+                  className="flex-1 py-2 rounded text-center text-lg transition-all"
+                  style={{ background: season === s ? `${seasonCfg.accent}20` : "transparent", border: `1px solid ${season === s ? seasonCfg.accent + "40" : "transparent"}` }}>
+                  {SEASON_CONFIG[s].emoji}
+                </button>
+              ))}
             </div>
           </div>
         )}
@@ -321,33 +400,39 @@ export default function Index() {
           <section className="relative h-screen min-h-[640px] flex items-center overflow-hidden">
             <div className="absolute inset-0 hero-grid" />
             <div className="absolute inset-0">
-              <img src={HERO_IMAGE} alt="" className="w-full h-full object-cover opacity-25" />
-              <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(13,11,7,0.3) 0%, rgba(13,11,7,0.65) 60%, #0D0B07 100%)" }} />
-              <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(245,166,35,0.07) 0%, transparent 65%)" }} />
+              <img src={HERO_IMAGE} alt="" className="w-full h-full object-cover opacity-60" style={{ objectPosition: "center 30%" }} />
+              <div className={`absolute inset-0 hero-overlay-${season}`} />
             </div>
             <div className="relative z-10 max-w-7xl mx-auto px-6 pt-16">
               <div className="max-w-3xl">
-                <div className="tag-badge animate-fade-up mb-6">Официальная законодательная база</div>
-                <h1 className="animate-fade-up delay-100" style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(4rem,10vw,7rem)", lineHeight: 0.9, fontWeight: 700, textTransform: "uppercase", color: "white" }}>
+                <div className="tag-badge animate-fade-up mb-6 flex items-center gap-2 w-fit">
+                  <span>{seasonCfg.emoji}</span> Официальная законодательная база
+                </div>
+                <h1 className="animate-fade-up delay-100" style={{ fontFamily: "'Cinzel', serif", fontSize: "clamp(2.8rem,8vw,6rem)", lineHeight: 1.0, fontWeight: 700, color: "white", textShadow: "0 2px 20px rgba(0,0,0,0.5)" }}>
                   Falko<span className="block gold-text">Role Play</span>
                 </h1>
-                <p className="mt-6 text-lg animate-fade-up delay-200" style={{ color: "rgba(255,255,255,0.5)", maxWidth: "36rem", lineHeight: 1.7 }}>
+                <p className="mt-6 text-lg animate-fade-up delay-200" style={{ fontFamily: "'EB Garamond', serif", color: "rgba(255,255,255,0.55)", maxWidth: "36rem", lineHeight: 1.8 }}>
                   Полная законодательная база сервера. Кодексы, правовые акты и официальные документы государственных органов.
                 </p>
                 <div className="mt-10 flex flex-wrap gap-4 animate-fade-up delay-300">
-                  <button onClick={() => goTo("codexes")} className="btn-gold px-8 py-3.5 rounded text-sm flex items-center gap-2.5"><Icon name="BookOpen" size={15} /> Открыть кодексы</button>
-                  <button onClick={() => goTo("documents")} className="btn-outline-gold px-8 py-3.5 rounded text-sm flex items-center gap-2.5"><Icon name="FileText" size={15} /> Документы</button>
+                  <button onClick={() => goTo("codexes")} className="px-8 py-3.5 rounded text-sm flex items-center gap-2.5 font-medium transition-all hover:-translate-y-0.5"
+                    style={{ background: `linear-gradient(135deg, ${seasonCfg.accent}, ${seasonCfg.secondary})`, color: "#0D0B07", fontFamily: "'Cinzel', serif", letterSpacing: "0.07em", fontSize: "0.78rem", textTransform: "uppercase" }}>
+                    <Icon name="BookOpen" size={15} /> Открыть кодексы
+                  </button>
+                  <button onClick={() => goTo("documents")} className="btn-outline-gold px-8 py-3.5 rounded text-sm flex items-center gap-2.5">
+                    <Icon name="FileText" size={15} /> Документы
+                  </button>
                 </div>
                 <div className="mt-16 flex gap-10 animate-fade-up delay-400">
                   {[
                     { num: String(codexes.length), label: "Кодексов" },
-                    { num: String(codexes.reduce((s, c) => s + c.articles, 0)), label: "Статей" },
+                    { num: String(codexes.reduce((acc, c) => acc + c.articles, 0)), label: "Статей" },
                     { num: String(documents.length), label: "Документов" },
                     { num: "v3.2", label: "Версия базы" },
                   ].map(s => (
                     <div key={s.label}>
-                      <div className="gold-text" style={{ fontFamily: "'Oswald', sans-serif", fontSize: "2rem", fontWeight: 600 }}>{s.num}</div>
-                      <div style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", marginTop: "0.2rem" }}>{s.label}</div>
+                      <div style={{ fontFamily: "'Cinzel', serif", fontSize: "2rem", fontWeight: 700, color: seasonCfg.accent }}>{s.num}</div>
+                      <div style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", marginTop: "0.2rem" }}>{s.label}</div>
                     </div>
                   ))}
                 </div>
@@ -370,12 +455,15 @@ export default function Index() {
                 { icon: "Mail", title: "Контакты", desc: "Связь с администрацией сервера", section: "contacts" as Section },
               ].map(item => (
                 <button key={item.title} onClick={() => goTo(item.section)} className="card-surface rounded-xl p-6 text-left group transition-all duration-300">
-                  <div className="w-10 h-10 rounded mb-4 flex items-center justify-center" style={{ background: "rgba(245,166,35,0.08)", border: "1px solid rgba(245,166,35,0.15)" }}>
-                    <Icon name={item.icon} fallback="Circle" size={18} style={{ color: "#F5A623" }} />
+                  <div className="w-10 h-10 rounded mb-4 flex items-center justify-center"
+                    style={{ background: `${seasonCfg.accent}12`, border: `1px solid ${seasonCfg.accent}25` }}>
+                    <Icon name={item.icon} fallback="Circle" size={18} style={{ color: seasonCfg.accent }} />
                   </div>
-                  <h3 style={{ fontFamily: "'Oswald', sans-serif", fontSize: "1.1rem", fontWeight: 500, color: "white" }} className="group-hover:text-yellow-400 transition-colors">{item.title}</h3>
-                  <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.85rem", marginTop: "0.3rem", lineHeight: 1.5 }}>{item.desc}</p>
-                  <div style={{ marginTop: "1rem", color: "rgba(245,166,35,0.6)", fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", fontFamily: "'Oswald', sans-serif", display: "flex", alignItems: "center", gap: "4px" }} className="group-hover:text-yellow-400 transition-colors">
+                  <h3 style={{ fontFamily: "'Cinzel', serif", fontSize: "0.95rem", fontWeight: 600, color: "white", letterSpacing: "0.04em" }}
+                    className="group-hover:opacity-80 transition-opacity">{item.title}</h3>
+                  <p style={{ fontFamily: "'EB Garamond', serif", color: "rgba(255,255,255,0.4)", fontSize: "0.95rem", marginTop: "0.3rem", lineHeight: 1.5 }}>{item.desc}</p>
+                  <div style={{ marginTop: "1rem", color: `${seasonCfg.accent}90`, fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", fontFamily: "'Cinzel', serif", display: "flex", alignItems: "center", gap: "4px" }}
+                    className="group-hover:opacity-100 transition-opacity">
                     Перейти <Icon name="ArrowRight" size={11} />
                   </div>
                 </button>
@@ -905,14 +993,17 @@ export default function Index() {
       )}
 
       {/* ══════════════ FOOTER ══════════════ */}
-      <footer style={{ borderTop: "1px solid rgba(255,255,255,0.05)", padding: "2.5rem 0", marginTop: "2rem" }}>
+      <footer style={{ borderTop: `1px solid ${seasonCfg.accent}12`, padding: "2.5rem 0", marginTop: "2rem" }}>
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-6 h-6 rounded flex items-center justify-center" style={{ background: "linear-gradient(135deg, #F5A623, #C97B1A)" }}><Icon name="Scale" size={12} className="text-[#0D0B07]" /></div>
-            <span style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.78rem", letterSpacing: "0.15em", color: "rgba(255,255,255,0.4)", textTransform: "uppercase" }}>Falko Role Play</span>
+            <img src={LOGO_URL} alt="FRP" className="w-8 h-8 object-contain opacity-70" />
+            <div>
+              <div style={{ fontFamily: "'Cinzel', serif", fontSize: "0.78rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.5)", fontWeight: 600 }}>Falko Role Play</div>
+              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.58rem", color: seasonCfg.accent, opacity: 0.7, letterSpacing: "0.08em" }}>Законодательная база</div>
+            </div>
           </div>
-          <div className="divider-gold hidden md:block flex-1 mx-10" />
-          <div style={{ fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.2)", fontSize: "0.72rem" }}>© 2026 Falko RP — Законодательная база</div>
+          <div className="divider-season hidden md:block flex-1 mx-10" />
+          <div style={{ fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.2)", fontSize: "0.7rem" }}>© 2026 Falko RP</div>
         </div>
       </footer>
 
